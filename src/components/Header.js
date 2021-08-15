@@ -1,12 +1,25 @@
 import React from 'react';
 
-const Header = ({ selectVal, setSelectVal, inputVal, setInputVal }) => {
+import { getBookData } from '../api';
+
+const Header = ({ selectVal, setSelectVal, inputVal, setInputVal, setBooks }) => {
     const handleSelectVal = (e) => setSelectVal(e.target.value);
     const handleInputVal = (e) => setInputVal(e.target.value);
     const handleSearchForm = (e) => {
         e.preventDefault();
 
         if (inputVal) {
+            const bookData = [];
+
+            getBookData(inputVal).then((books) => {
+                books.forEach((book) => {
+                    bookData.push(book.volumeInfo);
+                });
+
+                console.log(`Books Data: ${bookData}`);
+            });
+            
+            setBooks(bookData);
             setInputVal("");
         }
     }
@@ -20,7 +33,12 @@ const Header = ({ selectVal, setSelectVal, inputVal, setInputVal }) => {
             </select>
 
             <form className="search-form" onSubmit={(e) => handleSearchForm(e)}>
-                <input className="search-input" value={inputVal} type="text" onChange={(e) => handleInputVal(e)} placeholder="Search for a book" />
+                <input 
+                    className="search-input" 
+                    value={inputVal} 
+                    type="text" 
+                    onChange={(e) => handleInputVal(e)} placeholder="Search for a book"
+                 />
             </form>
         </div>
     )
