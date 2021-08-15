@@ -11,6 +11,7 @@ const App = () => {
                 selectVal={selectVal} 
                 setSelectVal={setSelectVal}
                 setInputVal={setInputVal} 
+                inputVal={inputVal}
             />
         </div>
     );
