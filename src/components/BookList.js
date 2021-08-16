@@ -4,7 +4,7 @@ const BookList = ({ books }) => {
 
     return (
         <div>
-            {books?.map((book, i) => (
+            {books?.filter((book) => book.imageLinks).map((book, i) => (
                 <Book book={book} key={i} />
             ))}
         </div>
