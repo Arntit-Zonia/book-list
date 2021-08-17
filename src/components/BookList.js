@@ -8,19 +8,19 @@ const BookList = ({ books, selectVal }) => {
     const [wishList, setWishList] = useState([]);
 
     const getTargetBookData = (targetBook) => {
-        let result = null;
+        // let result = null;
 
-        // books.find((book, i) =>  i === Number(targetBook));
+        return books.find((book, i) =>  i === Number(targetBook));
 
-        books.find((book, i) => {
-            if (i === Number(targetBook)) {
-                console.log(book);
+        // return books.find((book, i) => {
+        //     if (i === Number(targetBook)) {
+        //         console.log(book);
 
-                result = book;
-            }
+        //         result = book;
+        //     }
 
-            return result;
-        });
+        //     return result;
+        // });
     }
 
     const renderSearchComponent = () => {

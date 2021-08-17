@@ -1,21 +1,20 @@
 import React from 'react'
 
 const MyList = ({ book }) => {
-    const { title, authors, imageLinks } = book;
+    console.log(book);
 
     return (
-        <div className="my-list-container">
-            <div className="book">
-                <h3>{title}</h3>
-                
-                <img src={imageLinks?.thumbnail}/>
-
-                <p>{authors?.toString().replace(",", ", ")}</p>
+        (book?.map((data) => (
+            <div className="my-list-container">
+                <div className="book">
+                    <h3>{data.title}</h3>
+                    
+                    <img src={data.imageLinks.thumbnail}/>
+    
+                    <p>{data.authors?.toString().replace(",", ", ")}</p>
+                </div>
             </div>
-
-            {/* <button onClick={handleMyListBtn}>Add To My List</button> */}
-            {/* <button onClick={handleWishListBtn}>Add To Wishlist</button> */}
-        </div>
+        )))
     )
 }
 

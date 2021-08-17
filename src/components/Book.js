@@ -4,12 +4,9 @@ const Book = ({ book, id, myList, setMyList, getTargetBookData }) => {
     const handleMyListBtn = (e) => {
         console.log("Adding to my list...")
 
-        // setMyList([...myList,  e.target.previousElementSibling]);
-        
-        console.log(getTargetBookData(e.target.previousElementSibling.id));
-
         setMyList([...myList, getTargetBookData(e.target.previousElementSibling.id)]);
     };
+
     const handleWishListBtn = (e) => console.log("Adding to wishlist...");
 
     return (
