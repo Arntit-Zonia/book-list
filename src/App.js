@@ -37,7 +37,7 @@ const App = () => {
                 handleFormSubmit={handleFormSubmit}
             />
 
-            <BookList books={books} />
+            <BookList books={books} selectVal={selectVal} />
         </div>
     );
 }

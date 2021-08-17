@@ -1,13 +1,45 @@
-import Book from './Book';
+import { useState } from 'react';
 
-const BookList = ({ books }) => {
+import Book from './Book';
+import MyList from './MyList';
+
+const BookList = ({ books, selectVal }) => {
+    const [myList, setMyList] = useState([]);
+    const [wishList, setWishList] = useState([]);
+
+    const getTargetBookData = (targetBook) => {
+        let result = null;
+
+        // books.find((book, i) =>  i === Number(targetBook));
+
+        books.find((book, i) => {
+            if (i === Number(targetBook)) {
+                console.log(book);
+
+                result = book;
+            }
+
+            return result;
+        });
+    }
+
+    const renderSearchComponent = () => {
+        return (
+            <div>
+                {books?.filter((book) => book.imageLinks).map((book, i) => (
+                    <Book book={book} key={i} id={i} myList={myList} setMyList={setMyList} getTargetBookData={getTargetBookData} />
+                ))}
+            </div>
+        )
+    }
+
+    const renderMyListComponent = () => {
+        return (<MyList book={myList} />)
+    }
 
     return (
-        <div>
-            {books?.filter((book) => book.imageLinks).map((book, i) => (
-                <Book book={book} key={i} />
-            ))}
-        </div>
+        selectVal === "search" ? renderSearchComponent() 
+        : renderMyListComponent()
     )
 }
 
