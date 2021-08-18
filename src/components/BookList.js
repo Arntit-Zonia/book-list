@@ -1,15 +1,15 @@
 import { useState } from 'react';
 
 import SearchBook from './SearchBook';
-import MyList from './MyList';
+import MyLists from './MyLists';
 
 const BookList = ({ books, selectVal }) => {
-    const [myList, setMyList] = useState([]);
+    const [completed, setCompleted] = useState([]);
     const [wishList, setWishList] = useState([]);
 
     const getTargetBookData = (targetBook) => books.find((book, i) =>  i === Number(targetBook));
 
-    const renderSearchComponent = () => {
+    const renderSearchBookComponent = () => {
         return (
             <div>
                 {books?.filter((book) => book.imageLinks).map((book, i) => (
@@ -17,8 +17,10 @@ const BookList = ({ books, selectVal }) => {
                         book={book} 
                         key={i} 
                         id={i} 
-                        myList={myList} 
-                        setMyList={setMyList} 
+                        completed={completed} 
+                        setCompleted={setCompleted} 
+                        wishList={wishList}
+                        setWishList={setWishList}
                         getTargetBookData={getTargetBookData} 
                     />
                 ))}
@@ -26,13 +28,21 @@ const BookList = ({ books, selectVal }) => {
         )
     }
 
-    const renderMyListComponent = () => {
-        return (<MyList myList={myList} setMyList={setMyList} />)
+    const renderMyListsComponent = () => {
+        return (
+            <MyLists 
+                completed={completed} 
+                setCompleted={setCompleted} 
+                wishList={wishList}
+                setWishList={setWishList}
+                selectVal={selectVal}
+            />
+        )
     }
 
     return (
-        selectVal === "search" ? renderSearchComponent() 
-        : renderMyListComponent()
+        selectVal === "search" ? renderSearchBookComponent() 
+        : renderMyListsComponent()
     )
 }
 

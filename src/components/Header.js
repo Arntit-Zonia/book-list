@@ -8,8 +8,8 @@ const Header = ({ selectVal, setSelectVal, inputVal, setInputVal, handleFormSubm
         <div className="header-container">
             <select className="route-options" value={selectVal} onChange={handleSelectVal}>
                 <option value="search" id="search">Search</option>
-                <option value="my list" id="my-list">My List</option>
-                <option value="my wishlist" id="wishlist">My Wishlist</option>
+                <option value="completed" id="completed">Completed</option>
+                <option value="wishlist" id="wishlist">Wishlist</option>
             </select>
 
             <form className="search-form" onSubmit={handleFormSubmit}>
