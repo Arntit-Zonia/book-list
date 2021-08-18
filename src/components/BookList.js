@@ -7,21 +7,7 @@ const BookList = ({ books, selectVal }) => {
     const [myList, setMyList] = useState([]);
     const [wishList, setWishList] = useState([]);
 
-    const getTargetBookData = (targetBook) => {
-        // let result = null;
-
-        return books.find((book, i) =>  i === Number(targetBook));
-
-        // return books.find((book, i) => {
-        //     if (i === Number(targetBook)) {
-        //         console.log(book);
-
-        //         result = book;
-        //     }
-
-        //     return result;
-        // });
-    }
+    const getTargetBookData = (targetBook) => books.find((book, i) =>  i === Number(targetBook));
 
     const renderSearchComponent = () => {
         return (
@@ -34,7 +20,7 @@ const BookList = ({ books, selectVal }) => {
     }
 
     const renderMyListComponent = () => {
-        return (<MyList book={myList} />)
+        return (<MyList myList={myList} setMyList={setMyList} />)
     }
 
     return (
