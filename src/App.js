@@ -22,6 +22,7 @@ const App = () => {
 
                 setBooks(bookData);
                 setInputVal("");
+                setSelectVal("search"); 
             });
         }
     }

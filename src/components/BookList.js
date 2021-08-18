@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Book from './Book';
+import SearchBook from './SearchBook';
 import MyList from './MyList';
 
 const BookList = ({ books, selectVal }) => {
@@ -13,7 +13,14 @@ const BookList = ({ books, selectVal }) => {
         return (
             <div>
                 {books?.filter((book) => book.imageLinks).map((book, i) => (
-                    <Book book={book} key={i} id={i} myList={myList} setMyList={setMyList} getTargetBookData={getTargetBookData} />
+                    <SearchBook 
+                        book={book} 
+                        key={i} 
+                        id={i} 
+                        myList={myList} 
+                        setMyList={setMyList} 
+                        getTargetBookData={getTargetBookData} 
+                    />
                 ))}
             </div>
         )
