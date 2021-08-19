@@ -3,7 +3,7 @@ import { useState } from 'react';
 import SearchBook from './SearchBook';
 import MyLists from './MyLists';
 
-const BookList = ({ books, selectVal }) => {
+const BookList = ({ books, route }) => {
     const [completed, setCompleted] = useState([]);
     const [wishList, setWishList] = useState([]);
 
@@ -35,13 +35,13 @@ const BookList = ({ books, selectVal }) => {
                 setCompleted={setCompleted} 
                 wishList={wishList}
                 setWishList={setWishList}
-                selectVal={selectVal}
+                route={route}
             />
         )
     }
 
     return (
-        selectVal === "search" ? renderSearchBookComponent() 
+        route === "Search" ? renderSearchBookComponent() 
         : renderMyListsComponent()
     )
 }

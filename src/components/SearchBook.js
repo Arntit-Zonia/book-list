@@ -6,7 +6,7 @@ const Book = ({ book: { title, authors, imageLinks }, id, completed, setComplete
             <div className="book" id={id}>
                 <h3>{title}</h3>
                 
-                <img src={imageLinks.thumbnail}/>
+                <img src={imageLinks.thumbnail} alt="Book Cover"/>
 
                 <p>{authors?.toString().replace(",", ", ")}</p>
             </div>

@@ -1,16 +1,14 @@
 import React from 'react';
 
-const Header = ({ selectVal, setSelectVal, inputVal, setInputVal, handleFormSubmit }) => {
-    const handleSelectVal = (e) => setSelectVal(e.target.value);
+const Header = ({ setRoute, inputVal, setInputVal, handleFormSubmit }) => {
+    const handleSelectVal = (e) => setRoute(e.target.innerHTML);
     const handleInputVal = (e) => setInputVal(e.target.value);
 
     return (
         <div className="header-container">
-            <select className="route-options" value={selectVal} onChange={handleSelectVal}>
-                <option value="search" id="search">Search</option>
-                <option value="completed" id="completed">Completed</option>
-                <option value="wishlist" id="wishlist">Wishlist</option>
-            </select>
+            <div id="search" onClick={handleSelectVal}>Search</div>
+            <div id="completed" onClick={handleSelectVal}>Completed</div>
+            <div id="wishlist" onClick={handleSelectVal}>Wishlist</div>
 
             <form className="search-form" onSubmit={handleFormSubmit}>
                 <input 

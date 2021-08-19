@@ -5,7 +5,7 @@ import Header from './components/Header';
 import { getBookData } from './api';
 
 const App = () => {
-    const [selectVal, setSelectVal] = useState("search");
+    const [route, setRoute] = useState("Search");
     const [inputVal, setInputVal] = useState("");
     const [books, setBooks] = useState([]);
  
@@ -22,23 +22,22 @@ const App = () => {
 
                 setBooks(bookData);
                 setInputVal("");
-                setSelectVal("search"); 
+                setRoute("Search");
             });
         }
     }
 
     return (
         <div className="App">
-            <Header 
-                selectVal={selectVal} 
-                setSelectVal={setSelectVal}
+            <Header  
+                setRoute={setRoute}
                 setInputVal={setInputVal} 
                 inputVal={inputVal}
                 setBooks={setBooks}
                 handleFormSubmit={handleFormSubmit}
             />
 
-            <BookList books={books} selectVal={selectVal} />
+            <BookList books={books} route={route} />
         </div>
     );
 }

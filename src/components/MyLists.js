@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MyList = ({ completed, setCompleted, wishList, setWishList, selectVal }) => {
+const MyList = ({ completed, setCompleted, wishList, setWishList, route }) => {
     const handleRemoveBook = (e, list, setList) => {
         const filteredList = list?.filter((book, i) => i !== Number(e.target.previousElementSibling.id));
 
@@ -13,7 +13,7 @@ const MyList = ({ completed, setCompleted, wishList, setWishList, selectVal }) =
                 <div className="book" id={i}>
                     <h3>{data.title}</h3>
                     
-                    <img src={data.imageLinks.thumbnail}/>
+                    <img src={data.imageLinks.thumbnail} alt="Book Cover"/>
     
                     <p>{data.authors?.toString().replace(",", ", ")}</p>
                 </div>
@@ -24,7 +24,7 @@ const MyList = ({ completed, setCompleted, wishList, setWishList, selectVal }) =
     }
 
     return (
-        selectVal === "completed" ? renderList(completed, setCompleted) 
+        route === "Completed" ? renderList(completed, setCompleted) 
         : renderList(wishList, setWishList)
     )
 }
