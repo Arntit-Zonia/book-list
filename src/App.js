@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BookList from './components/BookList';
 import Header from './components/Header';
 
-import { getBookData } from './api';
+import { getBookSearchData } from './api';
 
 const App = () => {
     const [route, setRoute] = useState("Search");
@@ -15,7 +15,7 @@ const App = () => {
         if (inputVal) {
             const bookData = [];
 
-            getBookData(inputVal).then((books) => {
+            getBookSearchData(inputVal).then((books) => {
                 books.forEach((book) => {
                     bookData.push(book.volumeInfo);
                 });
