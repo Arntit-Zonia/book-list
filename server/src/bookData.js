@@ -20,11 +20,12 @@ const completedBooks = (req, res) => {
         authors: req.body.authors?.toString().replace(",", ", ")
     }
 
-    loadStoredBooksData.push(obj);
+    if (obj.title) {
+        loadStoredBooksData.push(obj);
+        fs.writeFileSync("./book-lists/completed.json", JSON.stringify(loadStoredBooksData));
+    }
     
-    fs.writeFileSync("./book-lists/completed.json", JSON.stringify(loadStoredBooksData));
-
-    res.json({ data: [] });
+    res.json({ data: loadBooks("./book-lists/completed.json") });
 }
 
 const removeCompletedBook = (req, res) => {
@@ -34,7 +35,7 @@ const removeCompletedBook = (req, res) => {
 
     const filteredBooks = loadStoredBooksData.filter((book) => book.thumbnail !== req.body.imageLinks?.thumbnail);
 
-    console.log(filteredBooks);
+    // console.log(filteredBooks);
     
     if (loadStoredBooksData.length) fs.writeFileSync("./book-lists/completed.json", JSON.stringify(filteredBooks));
 
