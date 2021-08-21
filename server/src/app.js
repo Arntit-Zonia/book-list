@@ -10,6 +10,8 @@ app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use("/completed/delete", books.removeCompletedBook);
 app.use("/completed", books.completedBooks);
 app.use("/wishlist", books.wishlist);
 

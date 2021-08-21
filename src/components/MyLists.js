@@ -1,8 +1,14 @@
 import React from 'react'
 
+import { uploadBookData } from '../api';
+
 const MyList = ({ completed, setCompleted, wishList, setWishList, route }) => {
     const handleRemoveBook = (e, list, setList) => {
         const filteredList = list?.filter((book, i) => i !== Number(e.target.previousElementSibling.id));
+        const removedBook = list?.find((book, i) => i === Number(e.target.previousElementSibling.id));
+
+        route === "Completed" ? uploadBookData("completed/delete", removedBook) 
+        : uploadBookData("wishlist/delete", removedBook);    
 
         setList(filteredList);
     }
@@ -13,7 +19,7 @@ const MyList = ({ completed, setCompleted, wishList, setWishList, route }) => {
                 <div className="book" id={i}>
                     <h3>{data.title}</h3>
                     
-                    <img src={data.imageLinks.thumbnail} alt="Book Cover"/>
+                    <img src={data.imageLinks?.thumbnail} alt="Book Cover"/>
     
                     <p>{data.authors?.toString().replace(",", ", ")}</p>
                 </div>

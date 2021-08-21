@@ -11,31 +11,41 @@ const loadBooks = (bookStorage) => {
 }
 
 const completedBooks = (req, res) => {
-    console.log("Something happening on completedBooks");
+    console.log("Adding completedBooks");
     
     const loadStoredBooksData = loadBooks("./book-lists/completed.json");
     const obj = {
         title: req.body.title,
-        thumbnail: req.body.imageLinks.thumbnail,
+        thumbnail: req.body.imageLinks?.thumbnail,
         authors: req.body.authors?.toString().replace(",", ", ")
     }
 
-    // console.log(`Completed Books Stored: ${JSON.stringify(loadStoredBooksData)}`);
-
     loadStoredBooksData.push(obj);
     
-    // console.log(`New Completed Books Stored: ${JSON.stringify(loadStoredBooksData)}`);
-
     fs.writeFileSync("./book-lists/completed.json", JSON.stringify(loadStoredBooksData));
 
     res.json({ data: [] });
 }
 
+const removeCompletedBook = (req, res) => {
+    console.log("Removing completedBook");
+    
+    const loadStoredBooksData = loadBooks("./book-lists/completed.json");
+
+    const filteredBooks = loadStoredBooksData.filter((book) => book.thumbnail !== req.body.imageLinks?.thumbnail);
+
+    console.log(filteredBooks);
+    
+    if (loadStoredBooksData.length) fs.writeFileSync("./book-lists/completed.json", JSON.stringify(filteredBooks));
+
+    res.json({ data: [] });
+}
+
 const wishlist = (req, res) => {
-    console.log("Something happening on wishlist");
+    console.log("Adding book to wishlist");
 
     res.json({ data: [] });
     // res.json({ data: ["Wishlist"] });
 }
 
-module.exports = { completedBooks, wishlist };
+module.exports = { completedBooks, wishlist, removeCompletedBook };
