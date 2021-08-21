@@ -1,5 +1,11 @@
+import { uploadBookData } from "../api/";
+
 const Book = ({ book: { title, authors, imageLinks }, id, completed, setCompleted, wishList, setWishList, getTargetBookData }) => {
-    const handleAddToList = (e, list, setList, siblingElement) => setList([...list, getTargetBookData(siblingElement)]);
+    const handleAddToList = (e, list, setList, siblingElement) => {
+        setList([...list, getTargetBookData(siblingElement)]);
+
+        e.target.id === "completed-btn" ? uploadBookData("completed", getTargetBookData(siblingElement)) : uploadBookData("wishlist", getTargetBookData(siblingElement));
+    };
 
     return (
         <div className="book-container">
@@ -11,11 +17,13 @@ const Book = ({ book: { title, authors, imageLinks }, id, completed, setComplete
                 <p>{authors?.toString().replace(",", ", ")}</p>
             </div>
 
-            <button 
+            <button
+                id="completed-btn" 
                 onClick={(e) => handleAddToList(e, completed, setCompleted, e.target.previousElementSibling.id)}>
                 Add To Completed
             </button>
-            <button 
+            <button
+                id="wishlist-btn" 
                 onClick={(e) => handleAddToList(e, wishList, setWishList, e.target.previousElementSibling.previousElementSibling.id)}>
                 Add To Wishlist
             </button>

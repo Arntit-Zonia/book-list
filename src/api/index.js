@@ -16,3 +16,10 @@ export const getBooksData = async (type) => {
 
     return data;
 }
+
+export const uploadBookData = async (type, requestBody) => {
+    const URL = `http://localhost:4000/${type}`;
+    const uploadData = await axios.post(URL, requestBody);
+
+    return uploadData;
+}
