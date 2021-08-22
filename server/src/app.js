@@ -11,8 +11,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/completed/delete", books.removeCompletedBook);
-app.use("/completed", books.completedBooks);
-app.use("/wishlist", books.wishlist);
+app.use("/completed/delete", books.removeBook);
+app.use("/wishlist/delete", books.removeBook);
+app.use("/completed", books.addBook);
+app.use("/wishlist", books.addBook);
 
 app.listen(port, () => console.log(`Server ${port} is running!`));

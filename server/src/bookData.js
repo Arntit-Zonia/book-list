@@ -10,36 +10,35 @@ const loadBooks = (bookStorage) => {
     }
 }
 
-const completedBooks = (req, res) => {
-    console.log("Adding completedBooks");
+const addBook = (req, res) => {
+    const bookListPath = `./book-lists${req.baseUrl}.json`;
+
+    console.log("Adding Book...");
+    console.log(bookListPath);
     
-    const loadStoredBooksData = loadBooks("./book-lists/completed.json");
+    const loadStoredBooksData = loadBooks(bookListPath);
   
     if (req.body.title) {
         loadStoredBooksData.push(req.body);
-        fs.writeFileSync("./book-lists/completed.json", JSON.stringify(loadStoredBooksData));
+        fs.writeFileSync(bookListPath, JSON.stringify(loadStoredBooksData));
     }
     
-    res.json({ data: loadBooks("./book-lists/completed.json") });
+    res.json({ data: loadBooks(bookListPath) });
 }
 
-const removeCompletedBook = (req, res) => {
-    console.log("Removing completedBook");
-    
-    const loadStoredBooksData = loadBooks("./book-lists/completed.json");
+const removeBook = (req, res) => {
+    const bookListPath = `./book-lists${req.baseUrl.replace("/delete", "")}.json`;
+
+    console.log("Removing Book...");
+    console.log(bookListPath);
+
+    const loadStoredBooksData = loadBooks(bookListPath);
 
     const filteredBooks = loadStoredBooksData.filter((book) => book.imageLinks.thumbnail !== req.body.imageLinks.thumbnail);
     
-    if (loadStoredBooksData.length) fs.writeFileSync("./book-lists/completed.json", JSON.stringify(filteredBooks));
+    if (loadStoredBooksData.length) fs.writeFileSync(bookListPath, JSON.stringify(filteredBooks));
 
     res.json({ data: [] });
 }
 
-const wishlist = (req, res) => {
-    console.log("Adding book to wishlist");
-
-    res.json({ data: [] });
-    // res.json({ data: ["Wishlist"] });
-}
-
-module.exports = { completedBooks, wishlist, removeCompletedBook };
+module.exports = { addBook, removeBook };
