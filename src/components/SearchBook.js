@@ -2,9 +2,13 @@ import { uploadBookData } from "../api/";
 
 const Book = ({ book: { title, authors, imageLinks }, id, completed, setCompleted, wishList, setWishList, getTargetBookData }) => {
     const handleAddToList = (e, list, setList, siblingElement) => {
-        setList([...list, getTargetBookData(siblingElement)]);
+        const checkForExistingBook = list.find((book) => book.imageLinks.thumbnail === getTargetBookData(siblingElement).imageLinks.thumbnail);
 
-        e.target.id === "completed-btn" ? uploadBookData("completed", getTargetBookData(siblingElement)) : uploadBookData("wishlist", getTargetBookData(siblingElement));
+        if (!checkForExistingBook) {
+            setList([...list, getTargetBookData(siblingElement)]);
+    
+            e.target.id === "completed-btn" ? uploadBookData("completed", getTargetBookData(siblingElement)) : uploadBookData("wishlist", getTargetBookData(siblingElement));
+        }
     };
 
     return (
