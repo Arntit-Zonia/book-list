@@ -4,7 +4,6 @@ import SearchBook from './SearchBook';
 import MyLists from './MyLists';
 import { getBooksData } from '../api/';
 
-
 const BookList = ({ books, route }) => {
     const [completed, setCompleted] = useState([]);
     const [wishList, setWishList] = useState([]);

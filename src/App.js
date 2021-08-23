@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BookList from './components/BookList';
 import Header from './components/Header';
 
@@ -9,6 +9,14 @@ const App = () => {
     const [inputVal, setInputVal] = useState("");
     const [books, setBooks] = useState([]);
  
+    useEffect(() => {  
+        const bookTitles = books.map( (book) => book.title);
+        const filteredData = books.filter(({title}, i) => !bookTitles.includes(title, i + 1));
+
+        setBooks(filteredData);
+
+    }, [inputVal]);
+
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
