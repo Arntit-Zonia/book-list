@@ -1,0 +1,77 @@
+/* Utility classes */
+.book-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 31rem;
+    font-size: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid lightgrey;
+    text-align: center;
+    transition: border .8s linear;
+    margin: 1rem;
+}
+
+.book-container:hover {
+    border-color: black;
+}
+
+.thumbnail {
+    margin: 1rem;
+}
+
+.btn {
+    display: inline-block;
+    width: 10rem;
+    height: 1.5rem;
+    cursor: pointer;
+    margin: 1rem .5rem;
+}
+
+.book-title {
+    width: 20rem;
+}
+
+/* Header */
+.header-container {
+    display: flex;
+    position: sticky;
+    height: 18px;
+    top: 0px;
+    border-bottom: 1px solid gray;
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+    background-color: white;
+    z-index: 1;
+}
+
+.search-input {
+    width: 20rem;
+    position: absolute;
+    left: 50%;
+    padding: .2rem;
+    transform: translateX(-50%);
+}
+
+#search, #completed, #wishlist {
+    cursor: pointer;
+}
+
+#search {
+    padding-left: 3rem;
+}
+
+#completed {
+    margin: auto 4rem;
+}
+
+#wishlist {
+    margin-right: 5rem;
+}
+
+/* BookList */
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-items: center;
+}

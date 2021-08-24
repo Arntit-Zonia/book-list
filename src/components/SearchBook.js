@@ -14,23 +14,26 @@ const Book = ({ book: { title, authors, imageLinks }, id, completed, setComplete
     return (
         <div className="book-container">
             <div className="book" id={id}>
-                <h3>{title}</h3>
+                <h3 className="book-title">{title}</h3>
                 
-                <img src={imageLinks.thumbnail} alt="Book Cover"/>
+                <img className="thumbnail" src={imageLinks.thumbnail} alt="Book Cover"/>
 
                 <p>{authors?.toString().replace(",", ", ")}</p>
             </div>
-
-            <button
-                id="completed-btn" 
-                onClick={(e) => handleAddToList(e, completed, setCompleted, e.target.previousElementSibling.id)}>
-                Add To Completed
-            </button>
-            <button
-                id="wishlist-btn" 
-                onClick={(e) => handleAddToList(e, wishList, setWishList, e.target.previousElementSibling.previousElementSibling.id)}>
-                Add To Wishlist
-            </button>
+            <div className="btn-container">
+                <button
+                    id="completed-btn"
+                    className="btn" 
+                    onClick={(e) => handleAddToList(e, completed, setCompleted, e.target.parentNode.previousElementSibling.id)}>
+                    Add To Completed
+                </button>
+                <button
+                    id="wishlist-btn" 
+                    className="btn"
+                    onClick={(e) => handleAddToList(e, wishList, setWishList, e.target.previousElementSibling.parentNode.previousElementSibling.id)}>
+                    Add To Wishlist
+                </button>
+            </div>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import BookList from './components/BookList';
 import Header from './components/Header';
 
 import { getBookSearchData } from './api';
+import "./styles/style.css";
 
 const App = () => {
     const [route, setRoute] = useState("Search");
@@ -36,7 +37,7 @@ const App = () => {
     }
 
     return (
-        <div className="App">
+        <div className="app">
             <Header  
                 setRoute={setRoute}
                 setInputVal={setInputVal} 

@@ -17,7 +17,7 @@ const BookList = ({ books, route }) => {
 
     const renderSearchBookComponent = () => {
         return (
-            <div>
+            <div className="grid-container">
                 {books?.filter((book) => book.imageLinks).map((book, i) => (
                     <SearchBook 
                         book={book} 
@@ -36,13 +36,15 @@ const BookList = ({ books, route }) => {
 
     const renderMyListsComponent = () => {
         return (
-            <MyLists 
-                completed={completed} 
-                setCompleted={setCompleted} 
-                wishList={wishList}
-                setWishList={setWishList}
-                route={route}
-            />
+            <div className="grid-container">
+                 <MyLists 
+                    completed={completed} 
+                    setCompleted={setCompleted} 
+                    wishList={wishList}
+                    setWishList={setWishList}
+                    route={route}
+                />
+            </div>
         )
     }
 

@@ -15,7 +15,7 @@ const Header = ({ setRoute, inputVal, setInputVal, handleFormSubmit }) => {
                     className="search-input" 
                     value={inputVal} 
                     type="text" 
-                    onChange={handleInputVal} placeholder="Search for a book"
+                    onChange={handleInputVal} placeholder="Search"
                  />
             </form>
         </div>
