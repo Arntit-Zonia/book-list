@@ -21,10 +21,10 @@ const Header = ({ setRoute, inputVal, setInputVal, handleFormSubmit }) => {
                 <Switch
                     className="switch"
                     onChange={handleSwitchVal}
-                    onColor={"#fff"}
-                    offColor={"#000"}
-                    onHandleColor={"#000"}
-                    offHandleColor={"#fff"}
+                    onColor={"#000"}
+                    offColor={"#fff"}
+                    onHandleColor={"#fff"}
+                    offHandleColor={"#000"}
                     checkedIcon={false}
                     uncheckedIcon={false}
                     checked={switchVal} 
