@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react';
 import BookList from './components/BookList';
 import Header from './components/Header';
 
-import { getBookSearchData } from './api';
+import { getBookSearchData, getTheme } from './api';
 import "./styles/style.css";
 
 const App = () => {
     const [route, setRoute] = useState("Search");
     const [inputVal, setInputVal] = useState("");
     const [books, setBooks] = useState([]);
-    const [switchVal, setSwitchVal] = useState(true);
+    const [switchVal, setSwitchVal] = useState();
 
     const handleTheme = () => switchVal ? "light" : "dark";
- 
+
+    useEffect(() => {
+        getTheme().then((bool) => setSwitchVal(bool));
+    }, []);
+
     useEffect(() => {
         document.body.style.backgroundColor = handleTheme() === "light" ? "whitesmoke" : "black";
     }, [switchVal]);
@@ -22,7 +26,6 @@ const App = () => {
         const filteredData = books.filter(({title}, i) => !bookTitles.includes(title, i + 1));
 
         setBooks(filteredData);
-
     }, [inputVal]);
 
     const handleFormSubmit = (e) => {

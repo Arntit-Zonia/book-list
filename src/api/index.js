@@ -23,3 +23,17 @@ export const uploadBookData = async (type, requestBody) => {
 
     return uploadData;
 }
+
+export const getTheme = async () => {
+    const URL = "http://localhost:4000/theme";
+    const {data: { data }} = await axios.get(URL);
+
+    return data[0].theme;
+}
+
+export const uploadTheme = async (type, requestBody) => {
+    const URL = `http://localhost:4000/${type}`;
+    const uploadData = await axios.post(URL, requestBody);
+
+    return uploadData;
+}
