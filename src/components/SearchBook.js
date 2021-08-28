@@ -1,6 +1,6 @@
 import { uploadBookData } from "../api/";
 
-const Book = ({ book: { title, authors, imageLinks }, id, completed, setCompleted, wishList, setWishList, getTargetBookData }) => {
+const Book = ({ book: { title, authors, imageLinks }, id, completed, setCompleted, wishList, setWishList, getTargetBookData, handleTheme }) => {
     const handleAddToList = (e, list, setList, siblingElement) => {
         const existingBook = list.find((book) => book.imageLinks.thumbnail === getTargetBookData(siblingElement).imageLinks.thumbnail);
 
@@ -12,7 +12,7 @@ const Book = ({ book: { title, authors, imageLinks }, id, completed, setComplete
     };
 
     return (
-        <div className="book-container">
+        <div className={`book-container ${handleTheme()}`}>
             <div className="book" id={id}>
                 <h3 className="book-title">{title}</h3>
                 

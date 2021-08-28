@@ -4,7 +4,7 @@ import SearchBook from './SearchBook';
 import MyLists from './MyLists';
 import { getBooksData } from '../api/';
 
-const BookList = ({ books, route }) => {
+const BookList = ({ books, route, handleTheme }) => {
     const [completed, setCompleted] = useState([]);
     const [wishList, setWishList] = useState([]);
 
@@ -27,7 +27,8 @@ const BookList = ({ books, route }) => {
                         setCompleted={setCompleted} 
                         wishList={wishList}
                         setWishList={setWishList}
-                        getTargetBookData={getTargetBookData} 
+                        getTargetBookData={getTargetBookData}
+                        handleTheme={handleTheme}
                     />
                 ))}
             </div>
@@ -43,6 +44,7 @@ const BookList = ({ books, route }) => {
                     wishList={wishList}
                     setWishList={setWishList}
                     route={route}
+                    handleTheme={handleTheme}
                 />
             </div>
         )

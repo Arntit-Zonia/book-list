@@ -2,7 +2,7 @@ import React from 'react'
 
 import { uploadBookData } from '../api';
 
-const MyList = ({ completed, setCompleted, wishList, setWishList, route }) => {
+const MyList = ({ completed, setCompleted, wishList, setWishList, route, handleTheme }) => {
     const handleRemoveBook = (e, list, setList) => {
         const filteredList = list?.filter((book, i) => i !== Number(e.target.parentNode.previousElementSibling.id));
         const removedBook = list?.find((book, i) => i === Number(e.target.parentNode.previousElementSibling.id));
@@ -15,7 +15,7 @@ const MyList = ({ completed, setCompleted, wishList, setWishList, route }) => {
 
     const renderList = (list, setList) => {
         return list?.map((data, i) => (
-            <div className="book-container" key={i}>
+            <div className={`book-container ${handleTheme()}`} key={i}>
                 <div className="book" id={i}>
                     <h3 className="book-title">{data.title}</h3>
                     

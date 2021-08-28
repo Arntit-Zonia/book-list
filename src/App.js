@@ -9,7 +9,14 @@ const App = () => {
     const [route, setRoute] = useState("Search");
     const [inputVal, setInputVal] = useState("");
     const [books, setBooks] = useState([]);
+    const [switchVal, setSwitchVal] = useState(true);
+
+    const handleTheme = () => switchVal ? "light" : "dark";
  
+    useEffect(() => {
+        document.body.style.backgroundColor = handleTheme() === "light" ? "whitesmoke" : "black";
+    }, [switchVal]);
+
     useEffect(() => {  
         const bookTitles = books.map( (book) => book.title);
         const filteredData = books.filter(({title}, i) => !bookTitles.includes(title, i + 1));
@@ -37,16 +44,23 @@ const App = () => {
     }
 
     return (
-        <div className="app">
+        <div className={`app ${handleTheme()}`}>
             <Header  
                 setRoute={setRoute}
                 setInputVal={setInputVal} 
                 inputVal={inputVal}
                 setBooks={setBooks}
                 handleFormSubmit={handleFormSubmit}
+                switchVal={switchVal}
+                setSwitchVal={setSwitchVal}
+                handleTheme={handleTheme}
             />
 
-            <BookList books={books} route={route} />
+            <BookList
+                books={books}
+                route={route}
+                handleTheme={handleTheme}
+            />
         </div>
     );
 }

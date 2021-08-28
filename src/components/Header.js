@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Switch from "react-switch";
 
-const Header = ({ setRoute, inputVal, setInputVal, handleFormSubmit }) => {
+const Header = ({ setRoute, inputVal, setInputVal, handleFormSubmit, switchVal, setSwitchVal, handleTheme }) => {
     const handleSelectVal = (e) => setRoute(e.target.innerHTML);
     const handleInputVal = (e) => setInputVal(e.target.value);
-    const [switchVal, setSwitchVal] = useState(true);
-
     const handleSwitchVal = (e) => setSwitchVal(e)
-    const handleTheme = () => switchVal ? "light" : "dark";
 
     return (
         <div className={`header-container ${handleTheme()}`}>
