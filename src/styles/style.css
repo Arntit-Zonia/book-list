@@ -1,3 +1,11 @@
+/* Variables */
+:root {
+    --white-text: #eeeeff;
+    --white-bg: #ecf0f1;
+    --black-text: #2d3436;
+    --black-bg: #1e272e;
+}
+
 @font-face {
     font-family: 'Lora';
     src: url('../fonts/Lora-Medium.woff2') format('woff2'),
@@ -29,7 +37,7 @@ body {
 }
 
 .book-container:hover {
-    border-color: black;
+    border-color: var(--black-bg);
 }
 
 .dark.book-container:hover {
@@ -65,13 +73,13 @@ body {
 /* App */
 .app {
     height: 100%;
-    color: black;
-    background-color: whitesmoke;
+    color: var(--black-text);
+    background-color: var(--white-bg);
 }
 
 .dark.app {
-    color: whitesmoke;
-    background-color: black;
+    color: var(--white-text);
+    background-color: var(--black-bg);
 }
 
 /* Header */
@@ -80,17 +88,17 @@ body {
     position: sticky;
     height: 18px;
     top: 0px;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid var(--white-text);
     padding-top: 1.5rem;
     padding-bottom: 2rem;
-    background-color: whitesmoke;
+    background-color: var(--white-bg);
     z-index: 1;
 }
 
 .dark.header-container {
-    border-bottom: 1px solid white;
-    background-color: black;
-    color: whitesmoke;
+    border-bottom: 1px solid var(--white-bg);
+    background-color: var(--black-bg);
+    color: var(--white-text);
 }
 
 .search-input {

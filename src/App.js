@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
 import BookList from './components/BookList';
 import Header from './components/Header';
-
 import { getBookSearchData, getTheme } from './api';
+
 import "./styles/style.css";
 
 const App = () => {
@@ -18,7 +19,7 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        document.body.style.backgroundColor = handleTheme() === "light" ? "whitesmoke" : "black";
+        document.body.style.backgroundColor = handleTheme() === "light" ? "#ecf0f1" : "#1e272e";
     }, [switchVal]);
 
     useEffect(() => {  
