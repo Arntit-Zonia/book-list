@@ -70,6 +70,11 @@ body {
     width: 20rem;
 }
 
+.selected {
+    border-bottom: 2px solid crimson;
+    padding-bottom: 1.5rem;
+}
+
 /* App */
 .app {
     height: 100%;
@@ -88,7 +93,7 @@ body {
     position: sticky;
     height: 18px;
     top: 0px;
-    border-bottom: 1px solid var(--white-text);
+    border-bottom: 1px solid lightgrey;
     padding-top: 1.5rem;
     padding-bottom: 2rem;
     background-color: var(--white-bg);
@@ -114,11 +119,11 @@ body {
 }
 
 #search {
-    padding-left: 3rem;
+    margin-left: 3rem;
 }
 
 #completed {
-    margin: auto 4rem;
+    margin: 0rem 4rem;
 }
 
 #wishlist {
