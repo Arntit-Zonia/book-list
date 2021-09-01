@@ -5,12 +5,14 @@ import { uploadTheme } from '../api';
 
 const Header = ({ setRoute, inputVal, setInputVal, handleFormSubmit, switchVal, setSwitchVal, handleTheme }) => {
     const handleInputVal = (e) => setInputVal(e.target.value);
+
     const handleSwitchVal = (e) => {
         setSwitchVal(e);
         uploadTheme("theme", { theme: e });
     }
+
     const handleSelectVal = (e) => {
-        document.querySelectorAll(".selected").forEach((elm) => elm.classList.remove("selected"))
+        document.querySelectorAll(".selected").forEach((elm) => elm.classList.remove("selected"));
         e.target.classList.add("selected");
 
         setRoute(e.target.innerHTML);

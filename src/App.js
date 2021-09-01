@@ -44,7 +44,7 @@ const App = () => {
                 setInputVal("");
                 setRoute("Search");
 
-                document.querySelectorAll(".selected").forEach((elm) => elm.classList.remove("selected"))
+                document.querySelectorAll(".selected").forEach((elm) => elm.classList.remove("selected"));
                 document.querySelector("#search").classList.add("selected");
             });
         }
