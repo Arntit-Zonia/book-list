@@ -11,7 +11,7 @@ export const getBookSearchData = async (query) => {
 };
 
 export const getBooksData = async (type) => {
-    const URL = `http://localhost:4000/${type}`;
+    const URL = `http://localhost:4000/load/${type}`;
     const {data: { data }} = await axios.get(URL);
 
     return data;
@@ -28,7 +28,7 @@ export const getTheme = async () => {
     const URL = "http://localhost:4000/theme";
     const {data: { data }} = await axios.get(URL);
 
-    return data[0].theme;
+    return data.theme;
 }
 
 export const uploadTheme = async (type, requestBody) => {

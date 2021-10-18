@@ -1,44 +1,76 @@
-const fs = require("fs");
+require('dotenv').config({ path: "../.env" });
 
-const loadBooks = (bookStorage) => {
+const { MongoClient } = require("mongodb");
+
+const uri = `mongodb+srv://arntitzonia:${process.env.DB_PASSWORD}@book-list-app.xflfb.mongodb.net/book-list?retryWrites=true&w=majority`;
+
+const client = new MongoClient(uri);
+
+const loadBooks = async (req, res) => {
     try {
-        return JSON.parse(fs.readFileSync(bookStorage, "utf-8"));
-    }
+        await client.connect();
 
-    catch(err) {
-        return [];
-    }
-}
+        const database = client.db("book-list");
+        let bookCollection;
+        
+        req.baseUrl.indexOf("completed") !== -1 ? bookCollection = database.collection("completed-books"): bookCollection = database.collection("wishlist-books");
 
-const addBook = (req, res) => {
-    const bookListPath = `./book-lists${req.baseUrl}.json`;
+        const getBookData = await bookCollection.find({}).toArray();
 
-    console.log("Adding Book...");
-    console.log(bookListPath);
-    
-    const loadStoredBooksData = loadBooks(bookListPath);
+        res.json({ data: getBookData });
   
-    if (req.body.title) {
-        loadStoredBooksData.push(req.body);
-        fs.writeFileSync(bookListPath, JSON.stringify(loadStoredBooksData));
+        await client.close();
+    } catch(err) {
+      console.log(err);
     }
-    
-    res.json({ data: loadBooks(bookListPath) });
 }
 
-const removeBook = (req, res) => {
-    const bookListPath = `./book-lists${req.baseUrl.replace("/delete", "")}.json`;
+const addBook = async (req, res) => {
+  try {
+    await client.connect();
 
-    console.log("Removing Book...");
-    console.log(bookListPath);
+    const bookCollection = `${req.baseUrl.replace("/", "")}-books`;
 
-    const loadStoredBooksData = loadBooks(bookListPath);
+    const database = client.db("book-list");
+    const storedBooks = database.collection(bookCollection);
 
-    const filteredBooks = loadStoredBooksData.filter((book) => book.imageLinks.thumbnail !== req.body.imageLinks.thumbnail);
-    
-    if (loadStoredBooksData.length) fs.writeFileSync(bookListPath, JSON.stringify(filteredBooks));
+    if (req.body.title) {
+        const result = await storedBooks.insertOne(req.body);
 
-    res.json({ data: [] });
+        console.log(`A document was inserted with the _id: ${result.insertedId}`);
+    } 
+
+  } finally {
+    await client.close();
+  }
 }
 
-module.exports = { addBook, removeBook };
+const removeBook = async (req, res) => {
+    try {
+        await client.connect();
+
+        const database = client.db("book-list");
+        let bookCollection;
+        
+        req.baseUrl.indexOf("completed") !== -1 ? bookCollection = database.collection("completed-books"): bookCollection = database.collection("wishlist-books");
+
+        const deleteDoc = {
+            imageLinks: {
+                smallThumbnail: req.body.imageLinks.smallThumbnail,
+                thumbnail: req.body.imageLinks.thumbnail
+            } 
+        }
+
+        const result = await bookCollection.deleteOne(deleteDoc);
+
+        if (result.deletedCount === 1) {
+          console.log("Successfully deleted one document.");
+        } else {
+          console.log("No documents matched the query. Deleted 0 documents.");
+        }
+      } finally {
+        await client.close();
+    }
+}
+
+module.exports = { loadBooks, addBook, removeBook };

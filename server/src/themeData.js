@@ -1,28 +1,48 @@
-const fs = require("fs");
+require('dotenv').config({ path: "../.env" });
 
-const themePath = "./theme/theme.json";
+const { MongoClient } = require("mongodb");
 
-const loadTheme = () => {
+const uri = `mongodb+srv://arntitzonia:${process.env.DB_PASSWORD}@book-list-app.xflfb.mongodb.net/book-list?retryWrites=true&w=majority`;
+
+const client = new MongoClient(uri);
+
+const loadTheme = async (req, res) => {
     try {
-        return JSON.parse(fs.readFileSync(themePath, "utf-8"));
-    }
+        await client.connect();
 
-    catch(err) {
-        return [];
-    }
-}
+        const database = client.db("book-list");
+        const themeCollection = database.collection("theme");
 
-const updateTheme = (req, res) => {
-    console.log("Updating Theme...");
+        let getBookData = await themeCollection.findOne({ theme: true });
 
-    const theme = loadTheme();
+        if (!getBookData) getBookData = await themeCollection.findOne({ theme: false });
+
+        res.json({ data: getBookData });
   
-    if (req.body.theme != null) {
-        theme[0] = req.body;
-        fs.writeFileSync(themePath, JSON.stringify(theme));
+        await client.close();
+    } catch(err) {
+      console.log(err);
     }
-    
-    res.json({ data: loadTheme() });
 }
 
-module.exports = { updateTheme };
+const updateTheme = async (req, res) => {
+    try {
+        await client.connect();
+
+        const database = client.db("book-list");
+        const themeCollection = database.collection("theme");
+
+        const getThemeData = await themeCollection.findOne({ theme: !req.body.theme });
+        const setThemeData = { $set: { theme: req.body.theme } }
+
+        const updateTheme = await themeCollection.updateOne(getThemeData, setThemeData);
+
+        console.log(`Theme value updated to ${req.body.theme}`);
+  
+        await client.close();
+    } catch(err) {
+      console.log(err);
+    }
+}
+
+module.exports = { loadTheme, updateTheme };

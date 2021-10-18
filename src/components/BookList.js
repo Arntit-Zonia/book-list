@@ -9,8 +9,9 @@ const BookList = ({ books, route, handleTheme }) => {
     const [wishList, setWishList] = useState([]);
 
     useEffect(() => {
-        getBooksData("completed").then((data) => setCompleted(data));
-        getBooksData("wishlist").then((data) => setWishList(data));
+        getBooksData("completed").then((data) => setCompleted(data)).then(() => {
+            getBooksData("wishlist").then((data) => setWishList(data));    
+        });
     }, []);
 
     const getTargetBookData = (targetBook) => books.find((book, i) =>  i === Number(targetBook));

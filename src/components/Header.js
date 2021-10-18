@@ -8,7 +8,7 @@ const Header = ({ setRoute, inputVal, setInputVal, handleFormSubmit, switchVal, 
 
     const handleSwitchVal = (e) => {
         setSwitchVal(e);
-        uploadTheme("theme", { theme: e });
+        uploadTheme("theme/upload", { theme: e });
     }
 
     const handleSelectVal = (e) => {
