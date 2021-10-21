@@ -2,20 +2,23 @@ import React from 'react';
 import Switch from "react-switch";
 
 import { uploadTheme } from '../api';
+import { HeaderProps } from '../interfaces/src/AppInterface';
 
-const Header = ({ setRoute, inputVal, setInputVal, handleFormSubmit, switchVal, setSwitchVal, handleTheme }) => {
-    const handleInputVal = (e) => setInputVal(e.target.value);
+const Header: React.FC<HeaderProps> = ({ setRoute, inputVal, setInputVal, handleFormSubmit, switchVal, setSwitchVal, handleTheme }) => {
+    const handleInputVal = (e: React.ChangeEvent<HTMLInputElement>) => setInputVal(e.target.value);
 
-    const handleSwitchVal = (e) => {
+    const handleSwitchVal = (e: boolean) => {
         setSwitchVal(e);
         uploadTheme("theme/upload", { theme: e });
     }
 
-    const handleSelectVal = (e) => {
-        document.querySelectorAll(".selected").forEach((elm) => elm.classList.remove("selected"));
-        e.target.classList.add("selected");
+    const handleSelectVal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        const target = e.target as HTMLElement;
 
-        setRoute(e.target.innerHTML);
+        document.querySelectorAll(".selected").forEach((elm) => elm.classList.remove("selected"));
+        target.classList.add("selected");
+
+        setRoute(target.innerHTML);
     }
 
     return (

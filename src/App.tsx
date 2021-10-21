@@ -3,16 +3,17 @@ import React, { useState, useEffect } from 'react';
 import BookList from './components/BookList';
 import Header from './components/Header';
 import { getBookSearchData, getTheme } from './api';
+import { Books } from "./interfaces/src/AppInterface";
 
 import "./styles/style.css";
 
 const App = () => {
     const [route, setRoute] = useState("Search");
     const [inputVal, setInputVal] = useState("");
-    const [books, setBooks] = useState([]);
-    const [switchVal, setSwitchVal] = useState();
+    const [books, setBooks] = useState<Books[]>([]);
+    const [switchVal, setSwitchVal] = useState(false);
 
-    const handleTheme = () => switchVal ? "light" : "dark";
+    const handleTheme = (): string => switchVal ? "light" : "dark";
 
     useEffect(() => {
         getTheme().then((bool) => setSwitchVal(bool));
@@ -24,16 +25,16 @@ const App = () => {
 
     useEffect(() => {  
         const bookTitles = books.map( (book) => book.title);
-        const filteredData = books.filter(({title}, i) => !bookTitles.includes(title, i + 1));
+        const filteredData = books.filter(({ title }, i) => !bookTitles.includes(title, i + 1));
 
         setBooks(filteredData);
     }, [inputVal]);
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (inputVal) {
-            const bookData = [];
+            const bookData: Books[] = [];
 
             getBookSearchData(inputVal).then((books) => {
                 books.forEach((book) => {
@@ -45,7 +46,7 @@ const App = () => {
                 setRoute("Search");
 
                 document.querySelectorAll(".selected").forEach((elm) => elm.classList.remove("selected"));
-                document.querySelector("#search").classList.add("selected");
+                document.querySelector("#search")?.classList.add("selected");
             });
         }
     }
@@ -56,7 +57,6 @@ const App = () => {
                 setRoute={setRoute}
                 setInputVal={setInputVal} 
                 inputVal={inputVal}
-                setBooks={setBooks}
                 handleFormSubmit={handleFormSubmit}
                 switchVal={switchVal}
                 setSwitchVal={setSwitchVal}
