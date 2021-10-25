@@ -12,6 +12,7 @@ const App = () => {
     const [inputVal, setInputVal] = useState("");
     const [books, setBooks] = useState<Books[]>([]);
     const [switchVal, setSwitchVal] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const handleTheme = (): string => switchVal ? "light" : "dark";
 
@@ -35,6 +36,8 @@ const App = () => {
 
         if (inputVal) {
             const bookData: Books[] = [];
+
+            setIsLoading(true);
 
             getBookSearchData(inputVal).then((books) => {
                 books.forEach((book) => {
@@ -67,6 +70,8 @@ const App = () => {
                 books={books}
                 route={route}
                 handleTheme={handleTheme}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
             />
         </div>
     );

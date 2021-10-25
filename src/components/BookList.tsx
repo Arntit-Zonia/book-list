@@ -4,7 +4,7 @@ import SearchBook from './SearchBook';
 import MyLists from './MyLists';
 import { BookListProps, Books } from '../interfaces/src/AppInterface';
 
-const BookList: React.FC<BookListProps> = ({ books, route, handleTheme }) => {
+const BookList: React.FC<BookListProps> = ({ books, route, handleTheme, isLoading, setIsLoading }) => {
     const [completed, setCompleted] = useState<Books[]>([]);
     const [wishList, setWishList] = useState<Books[]>([]);
     const [loadCompletedBooks, setLoadCompletedBooks] = useState(true);
@@ -26,6 +26,8 @@ const BookList: React.FC<BookListProps> = ({ books, route, handleTheme }) => {
                         setWishList={setWishList}
                         getTargetBookData={getTargetBookData}
                         handleTheme={handleTheme}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
                     />
                 ))}
             </div>
@@ -46,6 +48,8 @@ const BookList: React.FC<BookListProps> = ({ books, route, handleTheme }) => {
                     setLoadCompletedBooks={setLoadCompletedBooks}
                     loadWishlistBooks={loadWishlistBooks}
                     setLoadWishlistBooks={setLoadWishlistBooks}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
                 />
             </div>
         )

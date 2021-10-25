@@ -2,11 +2,14 @@ import { useEffect } from 'react';
 
 import { getBooksData, uploadBookData } from '../api';
 import { Books, MyListsProps } from '../interfaces/src/AppInterface';
+import Spinner from './Spinner';
 
-const MyList: React.FC<MyListsProps> = ({ completed, setCompleted, wishList, setWishList, route, handleTheme, loadCompletedBooks, setLoadCompletedBooks, loadWishlistBooks, setLoadWishlistBooks }) => {
+const MyList: React.FC<MyListsProps> = ({ completed, setCompleted, wishList, setWishList, route, handleTheme, loadCompletedBooks, setLoadCompletedBooks, loadWishlistBooks, setLoadWishlistBooks, isLoading, setIsLoading }) => {
     useEffect(() => {
         if (loadCompletedBooks && route === "Completed") {
             console.log("Loading Completed Books...");
+
+            setIsLoading(true);
 
             getBooksData("completed").then((data) => {
                 setCompleted(data);
@@ -14,11 +17,14 @@ const MyList: React.FC<MyListsProps> = ({ completed, setCompleted, wishList, set
                 console.log("Completed Books Loaded!");
 
                 setLoadCompletedBooks(false);
+                setIsLoading(false);
             });
         }
 
         if (loadWishlistBooks && route === "Wishlist") {
             console.log("Loading Wishlist Books...");
+
+            setIsLoading(true);
 
             getBooksData("wishlist").then((data) => {
                 setWishList(data);
@@ -26,6 +32,7 @@ const MyList: React.FC<MyListsProps> = ({ completed, setCompleted, wishList, set
                 console.log("Wishlist Books Loaded!");
 
                 setLoadWishlistBooks(false);
+                setIsLoading(false);
             });
         }
     }, [route]);
@@ -61,8 +68,10 @@ const MyList: React.FC<MyListsProps> = ({ completed, setCompleted, wishList, set
 
     return (
         <>
-            {route === "Completed" ? renderList(completed, setCompleted) 
-            : renderList(wishList, setWishList)}
+            {
+                isLoading ? <Spinner /> : route === "Completed" ? renderList(completed, setCompleted) :
+                renderList(wishList, setWishList)
+            }
         </>
     )
 }

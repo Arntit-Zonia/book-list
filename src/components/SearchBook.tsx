@@ -1,7 +1,15 @@
+import { useEffect, useState } from "react";
 import { uploadBookData } from "../api";
 import { Books, SearchBookProps } from "../interfaces/src/AppInterface";
+import Spinner from "./Spinner";
 
-const Book: React.FC<SearchBookProps> = ({ book: { title, authors, imageLinks }, id, completed, setCompleted, wishList, setWishList, getTargetBookData, handleTheme }) => {
+const Book: React.FC<SearchBookProps> = ({ book: { title, authors, imageLinks }, id, completed, setCompleted, wishList, setWishList, getTargetBookData, handleTheme, isLoading, setIsLoading }) => {
+    const [initialLoading, setInitialLoading] = useState(true);
+
+    useEffect(() => {
+        if (isLoading) setTimeout(() => setIsLoading(false), 500);
+    }, [title]);
+
     const handleAddToList = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, list: Books[], setList: React.Dispatch<React.SetStateAction<Books[]>>, siblingElement: string | undefined) => {
         const targetId = (e.target as HTMLElement).id;
 
@@ -14,7 +22,7 @@ const Book: React.FC<SearchBookProps> = ({ book: { title, authors, imageLinks },
         }
     };
 
-    return (
+    return (isLoading ? <Spinner /> :
         <div className={`book-container ${handleTheme()}`}>
             <div className="book" id={id}>
                 <h3 className="book-title">{title}</h3>
