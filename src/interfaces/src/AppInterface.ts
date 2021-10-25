@@ -36,8 +36,20 @@ export interface Books {
 }
 
 // App
+export interface BookSearchResult<TResult> {
+    items: TResult[];
+};
+
 export interface BookSearchData {
     volumeInfo: Books;
+}
+
+export interface BooksResponse {
+    data: Books[]
+};
+
+export interface ThemeResponse {
+    data: Theme
 }
 
 export interface Theme {
@@ -62,6 +74,8 @@ export interface BookListProps {
     books: Books[];
     route: string;
     handleTheme: () => string;
+    isLoading: boolean;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // SearchBook
@@ -74,6 +88,8 @@ export interface SearchBookProps {
     setWishList: React.Dispatch<React.SetStateAction<Books[]>>;
     getTargetBookData: (targetBook: string | undefined) => Books;
     handleTheme: () => string;
+    isLoading: boolean;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // MyLists
@@ -89,4 +105,6 @@ export interface MyListsProps {
     setLoadCompletedBooks: React.Dispatch<React.SetStateAction<boolean>>;
     loadWishlistBooks: boolean;
     setLoadWishlistBooks: React.Dispatch<React.SetStateAction<boolean>>;
+    isLoading: boolean;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
