@@ -1,6 +1,3 @@
-// API REQUESTS
-
-// App
 export interface Books {
     "title": string;
     "subtitle": string;
@@ -35,7 +32,6 @@ export interface Books {
     "canonicalVolumeLink": string;
 }
 
-// App
 export interface BookSearchResult<TResult> {
     items: TResult[];
 };
@@ -54,57 +50,4 @@ export interface ThemeResponse {
 
 export interface Theme {
     theme: boolean;
-}
-
-// PROPS
-
-// Header
-export interface HeaderProps {
-    setRoute: React.Dispatch<React.SetStateAction<string>>;
-    inputVal: string;
-    setInputVal: React.Dispatch<React.SetStateAction<string>>;
-    handleFormSubmit:  React.FormEventHandler<HTMLFormElement>;
-    switchVal: boolean;
-    setSwitchVal: React.Dispatch<React.SetStateAction<boolean>>;
-    handleTheme: () => string; 
-}
-
-// BookList
-export interface BookListProps {
-    books: Books[];
-    route: string;
-    handleTheme: () => string;
-    isLoading: boolean;
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-// SearchBook
-export interface SearchBookProps {
-    book: Books;
-    id: string;
-    completed: Books[];
-    setCompleted: React.Dispatch<React.SetStateAction<Books[]>>;
-    wishList: Books[];
-    setWishList: React.Dispatch<React.SetStateAction<Books[]>>;
-    getTargetBookData: (targetBook: string | undefined) => Books;
-    handleTheme: () => string;
-    isLoading: boolean;
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-// MyLists
-export interface MyListsProps {
-    completed: Books[];
-    setCompleted: React.Dispatch<React.SetStateAction<Books[]>>;
-    wishList: Books[];
-    setWishList: React.Dispatch<React.
-    SetStateAction<Books[]>>;
-    route: string;
-    handleTheme: () => string;
-    loadCompletedBooks: boolean;
-    setLoadCompletedBooks: React.Dispatch<React.SetStateAction<boolean>>;
-    loadWishlistBooks: boolean;
-    setLoadWishlistBooks: React.Dispatch<React.SetStateAction<boolean>>;
-    isLoading: boolean;
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }

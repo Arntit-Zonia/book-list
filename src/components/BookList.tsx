@@ -1,34 +1,17 @@
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import SearchBook from './SearchBook';
 import MyLists from './MyLists';
-import { BookListProps, Books } from '../interfaces/src/AppInterface';
+import { State } from '../state/reducers';
 
-const BookList: React.FC<BookListProps> = ({ books, route, handleTheme, isLoading, setIsLoading }) => {
-    const [completed, setCompleted] = useState<Books[]>([]);
-    const [wishList, setWishList] = useState<Books[]>([]);
-    const [loadCompletedBooks, setLoadCompletedBooks] = useState(true);
-    const [loadWishlistBooks, setLoadWishlistBooks] = useState(true);
-
-    const getTargetBookData = (targetBook: string | undefined): Books => books.filter((_book, i) =>  i === Number(targetBook))[0];
+const BookList: React.FC = () => {
+    const { searchBooks, route } = useSelector((state: State) => state);
 
     const renderSearchBookComponent = (): JSX.Element => {
         return (
             <div className="grid-container">
-                {books?.filter((book) => book.imageLinks).map((book, i) => (
-                    <SearchBook 
-                        book={book} 
-                        key={i} 
-                        id={i.toString()} 
-                        completed={completed} 
-                        setCompleted={setCompleted} 
-                        wishList={wishList}
-                        setWishList={setWishList}
-                        getTargetBookData={getTargetBookData}
-                        handleTheme={handleTheme}
-                        isLoading={isLoading}
-                        setIsLoading={setIsLoading}
-                    />
+                {searchBooks?.filter((book) => book.imageLinks).map((book, i) => (
+                    <SearchBook book={book} key={i} id={i.toString()} />
                 ))}
             </div>
         )
@@ -37,20 +20,7 @@ const BookList: React.FC<BookListProps> = ({ books, route, handleTheme, isLoadin
     const renderMyListsComponent = (): JSX.Element => {
         return (
             <div className="grid-container">
-                 <MyLists 
-                    completed={completed} 
-                    setCompleted={setCompleted} 
-                    wishList={wishList}
-                    setWishList={setWishList}
-                    route={route}
-                    handleTheme={handleTheme}
-                    loadCompletedBooks={loadCompletedBooks}
-                    setLoadCompletedBooks={setLoadCompletedBooks}
-                    loadWishlistBooks={loadWishlistBooks}
-                    setLoadWishlistBooks={setLoadWishlistBooks}
-                    isLoading={isLoading}
-                    setIsLoading={setIsLoading}
-                />
+                 <MyLists />
             </div>
         )
     }

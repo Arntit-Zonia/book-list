@@ -1,16 +1,31 @@
-import { useEffect, useState } from "react";
-import { uploadBookData } from "../api";
-import { Books, SearchBookProps } from "../interfaces/src/AppInterface";
-import Spinner from "./Spinner";
+import { useEffect } from "react";
+import { bindActionCreators, Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Book: React.FC<SearchBookProps> = ({ book: { title, authors, imageLinks }, id, completed, setCompleted, wishList, setWishList, getTargetBookData, handleTheme, isLoading, setIsLoading }) => {
-    const [initialLoading, setInitialLoading] = useState(true);
+import { uploadBookData } from "../api";
+import { Books } from "../interfaces/src/AppInterface";
+import Spinner from "./Spinner";
+import { State } from '../state/reducers';
+import * as actionCreators from "../state/action-creators/index";
+import { booksAction } from "../state/interfaces/interfaces";
+import { ActionTypes } from "../state/action-types";
+
+interface SearchBookProps {
+    book: Books;
+    id: string;
+}
+
+const Book: React.FC<SearchBookProps> = ({ book: { title, authors, imageLinks }, id}) => {
+    const { searchBooks, themeValue, completedBooks, wishlistBooks, isLoading } = useSelector((state: State) => state);
+    const { setCompletedBooks, setWishlistBooks, setIsLoading } = bindActionCreators(actionCreators, useDispatch());
 
     useEffect(() => {
         if (isLoading) setTimeout(() => setIsLoading(false), 500);
     }, [title]);
 
-    const handleAddToList = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, list: Books[], setList: React.Dispatch<React.SetStateAction<Books[]>>, siblingElement: string | undefined) => {
+    const getTargetBookData = (targetBook: string | undefined): Books => searchBooks.filter((_book, i) =>  i === Number(targetBook))[0];
+    
+    const handleAddToList = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, list: Books[], setList: { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.COMPLETED_BOOKS>>) => void;} | { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.WISHLIST_BOOKS>>) => void;}, siblingElement: string | undefined) => {
         const targetId = (e.target as HTMLElement).id;
 
         const existingBook = list.find((book: Books): boolean => book.imageLinks.thumbnail === getTargetBookData(siblingElement)?.imageLinks.thumbnail);
@@ -23,7 +38,7 @@ const Book: React.FC<SearchBookProps> = ({ book: { title, authors, imageLinks },
     };
 
     return (isLoading ? <Spinner /> :
-        <div className={`book-container ${handleTheme()}`}>
+        <div className={`book-container ${themeValue}`}>
             <div className="book" id={id}>
                 <h3 className="book-title">{title}</h3>
                 
@@ -37,21 +52,21 @@ const Book: React.FC<SearchBookProps> = ({ book: { title, authors, imageLinks },
                     className="btn" 
                     onClick={
                         (e) => {
-                            const targetElm = (e.target as HTMLInputElement).parentElement?.previousElementSibling?.id;
+                            const targetElm = (e.target as HTMLButtonElement).parentElement?.previousElementSibling?.id;
 
-                            handleAddToList(e, completed, setCompleted, targetElm);
+                            handleAddToList(e, completedBooks, setCompletedBooks, targetElm);
                         }
                     } >
                     Add To Completed
                 </button>
                 <button
-                    id="wishlist-btn" 
+                    id="wishlist-btn"
                     className="btn"
                     onClick={
                         (e) => {
-                            const targetElm = (e.target as HTMLInputElement).previousElementSibling?.parentElement?.previousElementSibling?.id;
+                            const targetElm = (e.target as HTMLButtonElement).previousElementSibling?.parentElement?.previousElementSibling?.id;
 
-                            handleAddToList(e, wishList, setWishList, targetElm);
+                            handleAddToList(e, wishlistBooks, setWishlistBooks, targetElm);
                         }
                     }>
                     Add To Wishlist

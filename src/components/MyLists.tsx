@@ -1,10 +1,19 @@
 import { useEffect } from 'react';
+import { bindActionCreators, Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { getBooksData, uploadBookData } from '../api';
-import { Books, MyListsProps } from '../interfaces/src/AppInterface';
+import { State } from '../state/reducers';
+import * as actionCreators from "../state/action-creators/index";
+import { Books } from '../interfaces/src/AppInterface';
 import Spinner from './Spinner';
+import { ActionTypes } from '../state/action-types';
+import { booksAction } from '../state/interfaces/interfaces';
 
-const MyList: React.FC<MyListsProps> = ({ completed, setCompleted, wishList, setWishList, route, handleTheme, loadCompletedBooks, setLoadCompletedBooks, loadWishlistBooks, setLoadWishlistBooks, isLoading, setIsLoading }) => {
+const MyList: React.FC = () => {
+    const { completedBooks, wishlistBooks, route, themeValue, loadCompletedBooks, loadWishlistBooks, isLoading } = useSelector((state: State) => state);
+    const { setCompletedBooks, setWishlistBooks, setLoadCompletedBooks, setLoadWishlistBooks, setIsLoading } = bindActionCreators(actionCreators, useDispatch());
+
     useEffect(() => {
         if (loadCompletedBooks && route === "Completed") {
             console.log("Loading Completed Books...");
@@ -12,7 +21,7 @@ const MyList: React.FC<MyListsProps> = ({ completed, setCompleted, wishList, set
             setIsLoading(true);
 
             getBooksData("completed").then((data) => {
-                setCompleted(data);
+                setCompletedBooks(data);
 
                 console.log("Completed Books Loaded!");
 
@@ -27,7 +36,7 @@ const MyList: React.FC<MyListsProps> = ({ completed, setCompleted, wishList, set
             setIsLoading(true);
 
             getBooksData("wishlist").then((data) => {
-                setWishList(data);
+                setWishlistBooks(data);
 
                 console.log("Wishlist Books Loaded!");
 
@@ -37,7 +46,7 @@ const MyList: React.FC<MyListsProps> = ({ completed, setCompleted, wishList, set
         }
     }, [route]);
 
-    const handleRemoveBook = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, list: Books[], setList: React.Dispatch<React.SetStateAction<Books[]>>) => {
+    const handleRemoveBook = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, list: Books[], setList:{ (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.COMPLETED_BOOKS>>) => void;} | { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.WISHLIST_BOOKS>>) => void;}) => {
         const targetElm = (e.target as HTMLInputElement).parentElement?.previousElementSibling?.id;
 
         const filteredList = list?.filter((_book, i) => i !== Number(targetElm));
@@ -49,9 +58,9 @@ const MyList: React.FC<MyListsProps> = ({ completed, setCompleted, wishList, set
         setList(filteredList);
     }
 
-    const renderList = (list: Books[], setList: React.Dispatch<React.SetStateAction<Books[]>>) => {
+    const renderList = (list: Books[], setList: { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.COMPLETED_BOOKS>>) => void;} | { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.WISHLIST_BOOKS>>) => void;}) => {
         return list?.map((data, i) => (
-            <div className={`book-container ${handleTheme()}`} key={i}>
+            <div className={`book-container ${themeValue}`} key={i}>
                 <div className="book" id={i.toString()}>
                     <h3 className="book-title">{data.title}</h3>
                     
@@ -69,8 +78,8 @@ const MyList: React.FC<MyListsProps> = ({ completed, setCompleted, wishList, set
     return (
         <>
             {
-                isLoading ? <Spinner /> : route === "Completed" ? renderList(completed, setCompleted) :
-                renderList(wishList, setWishList)
+                isLoading ? <Spinner /> : route === "Completed" ? renderList(completedBooks, setCompletedBooks) :
+                renderList(wishlistBooks, setWishlistBooks)
             }
         </>
     )
