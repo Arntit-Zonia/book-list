@@ -6,13 +6,14 @@ import BookList from './components/BookList';
 import Header from './components/Header';
 import { getTheme } from './api';
 import * as actionCreators from "./state/action-creators/index";
-
-import "./styles/style.css";
 import { State } from './state/reducers';
+import themeColors from './themeColors';
+import "./styles/style.css";
 
 const App = () => {
     const { switchVal } = useSelector((state: State) => state);
     const { setSwitchVal } = bindActionCreators(actionCreators, useDispatch());
+    const { LIGHT, DARK } = themeColors;
 
     useEffect(() => {
         // retrieves theme value stored in the db
@@ -20,7 +21,7 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        document.body.style.backgroundColor = switchVal ? "#ecf0f1" : "#1e272e";
+        document.body.style.backgroundColor = switchVal ? LIGHT : DARK;
     }, [switchVal]);
 
     return (
