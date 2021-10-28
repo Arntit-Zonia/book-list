@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { searchBooks, inputVal, isLoading, route, switchVal, themeValue, completedBooks, wishlistBooks, loadCompletedBooks, loadWishlistBooks } from "./reducers";
+import { searchBooks, inputVal, isLoading, route, switchVal, completedBooks, wishlistBooks, loadCompletedBooks, loadWishlistBooks } from "./reducers";
 
 const reducers = combineReducers({
     searchBooks,
@@ -8,7 +8,6 @@ const reducers = combineReducers({
     isLoading,
     route,
     switchVal,
-    themeValue,
     completedBooks,
     wishlistBooks,
     loadCompletedBooks,

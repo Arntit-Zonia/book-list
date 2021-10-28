@@ -9,5 +9,4 @@ export enum ActionTypes {
     SEARCH_BOOKS = "searchBooks",
     SWITCH_VAL = "switchVal",
     IS_LOADING = "isLoading",
-    THEME_VALUE = "themeValue",
 }

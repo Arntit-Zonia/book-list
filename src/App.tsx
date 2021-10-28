@@ -11,11 +11,8 @@ import "./styles/style.css";
 import { State } from './state/reducers';
 
 const App = () => {
-    const { switchVal, themeValue } = useSelector((state: State) => state);
-    const { setSwitchVal, getThemeValue } = bindActionCreators(actionCreators, useDispatch());
-
-    // returns "light" or "dark";
-    getThemeValue(switchVal);
+    const { switchVal } = useSelector((state: State) => state);
+    const { setSwitchVal } = bindActionCreators(actionCreators, useDispatch());
 
     useEffect(() => {
         // retrieves theme value stored in the db
@@ -23,11 +20,11 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        document.body.style.backgroundColor = themeValue === "light" ? "#ecf0f1" : "#1e272e";
+        document.body.style.backgroundColor = switchVal ? "#ecf0f1" : "#1e272e";
     }, [switchVal]);
 
     return (
-        <div className={`app ${themeValue}`}>
+        <div className={`app ${switchVal ? "light": "dark"}`}>
             <Header />
             <BookList />
         </div>

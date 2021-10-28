@@ -32,12 +32,6 @@ export const setIsLoading = (isLoading: boolean) => (dispatch: Dispatch<booleanA
     dispatch({ type: ActionTypes.IS_LOADING, payload: isLoading });
 }
 
-export const getThemeValue = (themeVal: boolean) => (dispatch: Dispatch<stringAction<ActionTypes.THEME_VALUE>>) => {
-    const payloadVal =  themeVal ? "light" : "dark";
-
-    dispatch({ type: ActionTypes.THEME_VALUE, payload: payloadVal });
-}
-
 export const setLoadCompletedBooks = (loading: boolean) => (dispatch: Dispatch<booleanAction<ActionTypes.LOAD_COMPLETED_BOOKS>>) => {
     dispatch({ type: ActionTypes.LOAD_COMPLETED_BOOKS, payload: loading });
 }

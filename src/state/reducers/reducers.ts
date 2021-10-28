@@ -67,15 +67,6 @@ export const isLoading = (state = true, action: booleanAction<ActionTypes.IS_LOA
 	}
 };
 
-export const themeValue = (state = "dark", action: stringAction<ActionTypes.THEME_VALUE>) => {
-	switch (action.type) {
-		case ActionTypes.THEME_VALUE:
-			return action.payload;
-		default:
-			return state;
-	}
-};
-
 export const loadCompletedBooks = (state = true, action: booleanAction<ActionTypes.LOAD_COMPLETED_BOOKS>) => {
 	switch (action.type) {
 		case ActionTypes.LOAD_COMPLETED_BOOKS:

@@ -16,7 +16,7 @@ interface SearchBookProps {
 }
 
 const Book: React.FC<SearchBookProps> = ({ book: { title, authors, imageLinks }, id}) => {
-    const { searchBooks, themeValue, completedBooks, wishlistBooks, isLoading } = useSelector((state: State) => state);
+    const { searchBooks, switchVal, completedBooks, wishlistBooks, isLoading } = useSelector((state: State) => state);
     const { setCompletedBooks, setWishlistBooks, setIsLoading } = bindActionCreators(actionCreators, useDispatch());
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const Book: React.FC<SearchBookProps> = ({ book: { title, authors, imageLinks },
     };
 
     return (isLoading ? <Spinner /> :
-        <div className={`book-container ${themeValue}`}>
+        <div className={`book-container ${switchVal ? "light": "dark"}`}>
             <div className="book" id={id}>
                 <h3 className="book-title">{title}</h3>
                 

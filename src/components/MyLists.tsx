@@ -11,7 +11,7 @@ import { ActionTypes } from '../state/action-types';
 import { booksAction } from '../state/interfaces/interfaces';
 
 const MyList: React.FC = () => {
-    const { completedBooks, wishlistBooks, route, themeValue, loadCompletedBooks, loadWishlistBooks, isLoading } = useSelector((state: State) => state);
+    const { completedBooks, wishlistBooks, route, switchVal, loadCompletedBooks, loadWishlistBooks, isLoading } = useSelector((state: State) => state);
     const { setCompletedBooks, setWishlistBooks, setLoadCompletedBooks, setLoadWishlistBooks, setIsLoading } = bindActionCreators(actionCreators, useDispatch());
 
     useEffect(() => {
@@ -60,7 +60,7 @@ const MyList: React.FC = () => {
 
     const renderList = (list: Books[], setList: { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.COMPLETED_BOOKS>>) => void;} | { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.WISHLIST_BOOKS>>) => void;}) => {
         return list?.map((data, i) => (
-            <div className={`book-container ${themeValue}`} key={i}>
+            <div className={`book-container ${switchVal ? "light": "dark"}`} key={i}>
                 <div className="book" id={i.toString()}>
                     <h3 className="book-title">{data.title}</h3>
                     

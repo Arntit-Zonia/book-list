@@ -10,7 +10,7 @@ import { getBookSearchData } from '../api';
 import { Books } from "../interfaces/src/AppInterface";
 
 const Header: React.FC = () => {
-    const { inputVal, switchVal, themeValue } = useSelector((state: State) => state);
+    const { inputVal, switchVal } = useSelector((state: State) => state);
     const { setRoute, setInputVal, setSwitchVal, setIsLoading, setSearchBooks } = bindActionCreators(actionCreators, useDispatch());
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -57,7 +57,7 @@ const Header: React.FC = () => {
     }
 
     return (
-        <div className={`header-container ${themeValue}`}>
+        <div className={`header-container ${switchVal ? "light": "dark"}`}>
             <div id="search" className="selected" onClick={handleSelectVal}>Search</div>
             <div id="completed" onClick={handleSelectVal}>Completed</div>
             <div id="wishlist" onClick={handleSelectVal}>Wishlist</div>
