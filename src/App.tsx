@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { bindActionCreators } from 'redux';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import BookList from './components/BookList';
 import Header from './components/Header';
 import { getTheme } from './api';
-import * as actionCreators from "./state/action-creators/index";
 import { State } from './state/reducers';
+import * as actionCreators from "./state/action-creators/index";
 import themeColors from './themeColors';
+
 import "./styles/style.css";
 
 const App = () => {

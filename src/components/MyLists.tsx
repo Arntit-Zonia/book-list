@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
+import Spinner from './Spinner';
 import { getBooksData, uploadBookData } from '../api';
 import { State } from '../state/reducers';
-import * as actionCreators from "../state/action-creators/index";
 import { Books } from '../interfaces/src/AppInterface';
-import Spinner from './Spinner';
 import { ActionTypes } from '../state/action-types';
 import { booksAction } from '../state/interfaces/interfaces';
+import * as actionCreators from "../state/action-creators/index";
 
 const MyList: React.FC = () => {
     const { completedBooks, wishlistBooks, route, switchVal, loadCompletedBooks, loadWishlistBooks, isLoading } = useSelector((state: State) => state);
@@ -46,7 +46,7 @@ const MyList: React.FC = () => {
         }
     }, [route]);
 
-    const handleRemoveBook = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, list: Books[], setList:{ (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.COMPLETED_BOOKS>>) => void;} | { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.WISHLIST_BOOKS>>) => void;}) => {
+    const handleRemoveBook = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, list: Books[], setList:{ (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.COMPLETED_BOOKS | ActionTypes.WISHLIST_BOOKS>>) => void;}) => {
         const targetElm = (e.target as HTMLInputElement).parentElement?.previousElementSibling?.id;
 
         const filteredList = list?.filter((_book, i) => i !== Number(targetElm));
@@ -58,7 +58,7 @@ const MyList: React.FC = () => {
         setList(filteredList);
     }
 
-    const renderList = (list: Books[], setList: { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.COMPLETED_BOOKS>>) => void;} | { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.WISHLIST_BOOKS>>) => void;}) => {
+    const renderList = (list: Books[], setList: { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.COMPLETED_BOOKS | ActionTypes.WISHLIST_BOOKS>>) => void;}) => {
         return list?.map((data, i) => (
             <div className={`book-container ${switchVal ? "light": "dark"}`} key={i}>
                 <div className="book" id={i.toString()}>

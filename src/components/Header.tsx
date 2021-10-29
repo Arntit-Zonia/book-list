@@ -1,13 +1,13 @@
 import React from 'react';
 import Switch from "react-switch";
 import { bindActionCreators } from 'redux';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { uploadTheme } from '../api';
 import { State } from '../state/reducers';
-import * as actionCreators from "../state/action-creators/index";
 import { getBookSearchData } from '../api';
 import { Books } from "../interfaces/src/AppInterface";
+import * as actionCreators from "../state/action-creators/index";
 
 const Header: React.FC = () => {
     const { inputVal, switchVal } = useSelector((state: State) => state);
@@ -27,10 +27,9 @@ const Header: React.FC = () => {
                 });
 
                 const bookTitles = bookData.map((book) => book.title);
-                const filteredData = bookData.filter(({ title }, i) => !bookTitles.includes(title, i + 1));
+                const filteredData = bookData.filter(({ title, imageLinks }, i) => !bookTitles.includes(title, i + 1) && imageLinks?.thumbnail);
         
                 setSearchBooks(filteredData);
-
                 setInputVal("");
                 setRoute("Search");
 

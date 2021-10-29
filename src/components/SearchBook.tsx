@@ -1,34 +1,34 @@
 import { useEffect } from "react";
 import { bindActionCreators, Dispatch } from 'redux';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
+import Spinner from "./Spinner";
 import { uploadBookData } from "../api";
 import { Books } from "../interfaces/src/AppInterface";
-import Spinner from "./Spinner";
 import { State } from '../state/reducers';
-import * as actionCreators from "../state/action-creators/index";
 import { booksAction } from "../state/interfaces/interfaces";
 import { ActionTypes } from "../state/action-types";
+import * as actionCreators from "../state/action-creators/index";
 
 interface SearchBookProps {
     book: Books;
     id: string;
 }
 
-const Book: React.FC<SearchBookProps> = ({ book: { title, authors, imageLinks }, id}) => {
+const SearchBook: React.FC<SearchBookProps> = ({ book: { title, authors, imageLinks }, id }) => {
     const { searchBooks, switchVal, completedBooks, wishlistBooks, isLoading } = useSelector((state: State) => state);
     const { setCompletedBooks, setWishlistBooks, setIsLoading } = bindActionCreators(actionCreators, useDispatch());
 
     useEffect(() => {
-        if (isLoading) setTimeout(() => setIsLoading(false), 500);
+        if (isLoading) setTimeout(() => setIsLoading(false), 100);
     }, [title]);
 
-    const getTargetBookData = (targetBook: string | undefined): Books => searchBooks.filter((_book, i) =>  i === Number(targetBook))[0];
+    const getTargetBookData = (targetBook: string | undefined): Books => searchBooks?.filter((_book, i) => i === Number(targetBook))[0];
     
-    const handleAddToList = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, list: Books[], setList: { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.COMPLETED_BOOKS>>) => void;} | { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.WISHLIST_BOOKS>>) => void;}, siblingElement: string | undefined) => {
+    const handleAddToList = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, list: Books[], setList: { (books: Books[]): (dispatch: Dispatch<booksAction<ActionTypes.COMPLETED_BOOKS | ActionTypes.WISHLIST_BOOKS>>) => void;}, siblingElement: string | undefined) => {
         const targetId = (e.target as HTMLElement).id;
 
-        const existingBook = list.find((book: Books): boolean => book.imageLinks.thumbnail === getTargetBookData(siblingElement)?.imageLinks.thumbnail);
+        const existingBook = list?.find((book: Books): boolean => book.imageLinks.thumbnail === getTargetBookData(siblingElement)?.imageLinks.thumbnail);
 
         if (!existingBook) {
             setList([...list, getTargetBookData(siblingElement)]);
@@ -76,4 +76,4 @@ const Book: React.FC<SearchBookProps> = ({ book: { title, authors, imageLinks },
     );
 }
 
-export default Book;
+export default SearchBook;

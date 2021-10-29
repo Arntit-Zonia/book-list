@@ -26,7 +26,7 @@ const BookList: React.FC = () => {
     }
 
     return (
-        route === "Search" ? renderSearchBookComponent() : renderMyListsComponent()
+        route === "Search" ? renderSearchBookComponent(): renderMyListsComponent()
     )
 }
 
